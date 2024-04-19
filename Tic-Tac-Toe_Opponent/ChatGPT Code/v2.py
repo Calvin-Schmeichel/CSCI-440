@@ -43,11 +43,11 @@ def ai_move():
             if empty_cells:
                 row, col = random.choice(empty_cells)
         board[row][col] = 'O'
-        buttons[row][col].config(text='O', fg='red')  # Update button text immediately
-        winner = check_winner()  # Check winner after the UI update
+        buttons[row][col].config(text='O', fg='red')
+        winner = check_winner()
         if winner:
             label.config(text=f'{winner} wins!')
-        player = 'X'  # Change player after the UI update
+        player = 'X'
 
 def find_winning_move(player):
     for r in range(3):
@@ -55,9 +55,9 @@ def find_winning_move(player):
             if board[r][c] is None:
                 board[r][c] = player
                 if check_winner() == player:
-                    board[r][c] = None  # Undo the move
+                    board[r][c] = None
                     return (r, c)
-                board[r][c] = None  # Undo the move
+                board[r][c] = None
     return None
 
 def reset_game():
@@ -67,12 +67,14 @@ def reset_game():
         for col in range(3):
             buttons[row][col].config(text='', fg='black')
     winner = None
-    player = 'X'
-    label.config(text="Player X's turn")
+    player = random.choice(['X', 'O'])  # Randomly choose who starts
+    if player == 'O':
+        ai_move()  # If AI starts, make the first move
+    label.config(text=f"Player {player}'s turn")
 
 app = tk.Tk()
 app.title('Tic Tac Toe')
-player = 'X'
+player = 'X'  # Default start player, will be reset immediately
 winner = None
 board = [[None]*3 for _ in range(3)]
 
@@ -90,4 +92,5 @@ reset_button.grid(row=3, column=1)
 label = tk.Label(app, text="Player X's turn")
 label.grid(row=3, column=0, columnspan=3)
 
+reset_game()  # Initialize game with random starter
 app.mainloop()
