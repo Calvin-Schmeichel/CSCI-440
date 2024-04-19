@@ -17,30 +17,33 @@ def check_winner():
     return None
 
 def on_click(row, col):
-    global player
+    global player, winner  # Declare winner as global here
     if board[row][col] is None and winner is None:
         board[row][col] = player
         if player == 'X':
             buttons[row][col].config(text='X', fg='blue')
             player = 'O'
-            winner = check_winner()
-            if winner:
-                label.config(text=f'{winner} wins!')
-            else:
-                ai_move()
         else:
             buttons[row][col].config(text='O', fg='red')
+            player = 'X'
         winner = check_winner()
         if winner:
             label.config(text=f'{winner} wins!')
+        elif player == 'O':  # Trigger AI move only if no winner yet
+            ai_move()
 
 def ai_move():
-    global player
-    empty_cells = [(r, c) for r in range(3) for c in range(3) if board[r][c] is None]
-    row, col = random.choice(empty_cells)
-    board[row][col] = 'O'
-    buttons[row][col].config(text='O', fg='red')
-    player = 'X'
+    global player, winner  # Declare winner as global here
+    if winner is None:  # Only make AI move if there's no winner yet
+        empty_cells = [(r, c) for r in range(3) for c in range(3) if board[r][c] is None]
+        if empty_cells:  # Check if there are still moves to make
+            row, col = random.choice(empty_cells)
+            board[row][col] = 'O'
+            buttons[row][col].config(text='O', fg='red')
+            player = 'X'
+            winner = check_winner()
+            if winner:
+                label.config(text=f'{winner} wins!')
 
 def reset_game():
     global board, winner, player
