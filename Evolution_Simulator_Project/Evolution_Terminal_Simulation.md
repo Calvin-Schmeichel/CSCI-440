@@ -32,3 +32,14 @@ I used Python and the Terminal + ASCII art for the project. Looking back using s
 
 ![alt text](Game_ScreenShot.png)
 
+### Issues
+
+Some issues I ran into was accurately explaining to ChatGPT the project deliverables and the logic I was trying to create. The other issue was explaining bugs for the AI to fix.
+
+As you can see from the screen shot for example we see the number of creatures is off (Only 2 creatures on screen vs 5).
+
+Another one was creatures spawning randomly across the field. (VS close by the parents.)
+
+### Ending
+
+So in the end the the code is "-working- code" aka it is in a state that runs. But it does not work great, but it *does* run.
